@@ -1,12 +1,12 @@
 ###########VPC############
 
 resource "aws_vpc" "main_vpc" {
-    cidr_block              = var.cidr_ip_block
+    cidr_block              = "${lookup(var.cidr_ip_block, var.stage)}.0.0/16"
     enable_dns_support      = true
     enable_dns_hostnames    = true
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-vpc"
+        Name = "vpc" 
     }
 }
 
@@ -15,14 +15,14 @@ resource "aws_internet_gateway" "main_gateway" {
     vpc_id = aws_vpc.main_vpc.id
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-gateway"
+        Name = "internet-gateway"
     }
 }
 
-resource "aws_internet_gateway_attachment" "main_attachment_gateway" {
-    vpc_id              = aws_vpc.main_vpc.id
-    internet_gateway_id = aws_internet_gateway.main_gateway.id
-}
+# resource "aws_internet_gateway_attachment" "main_attachment_gateway" {
+#     vpc_id              = aws_vpc.main_vpc.id
+#     internet_gateway_id = aws_internet_gateway.main_gateway.id
+# }
 
 ############PUBLIC ROUTE TABLE############
 resource "aws_route_table" "main_route_table_public" {
@@ -39,21 +39,21 @@ resource "aws_route" "main_route_public" {
 ############PUBLIC SUBNETS############
 resource "aws_subnet" "public_subnet_1" {
     vpc_id              = aws_vpc.main_vpc.id
-    cidr_block          = "${var.ip_subnet_1}/24"
-    availability_zone   = "us-west-2a"
+    cidr_block          = local.public_subnet[0]
+    availability_zone   = local.availability_zone[0]
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-subnet-1"
+        Name = "public-subnet-1"
     }
 }
 
 resource "aws_subnet" "public_subnet_2" {
     vpc_id              = aws_vpc.main_vpc.id
-    cidr_block          = "${var.ip_subnet_2}/24"
-    availability_zone   = "us-west-2b"
+    cidr_block          = local.public_subnet[1]
+    availability_zone   = local.availability_zone[1]
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-subnet-2"
+        Name = "public-subnet-2"
     }
 }
 
@@ -71,21 +71,21 @@ resource "aws_route_table_association" "public_subnet_2_association" {
 ############PRIVATE SUBNETS############
 resource "aws_subnet" "private_subnet_1" {
     vpc_id              = aws_vpc.main_vpc.id
-    cidr_block          = "${var.ip_subnet_3}/24"
-    availability_zone   = "us-west-2a"
+    cidr_block          = local.private_subnet[0]
+    availability_zone   = local.availability_zone[0]
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-subnet-3"
+        Name = "private-subnet-3"
     }
 }
 
 resource "aws_subnet" "private_subnet_2" {
     vpc_id              = aws_vpc.main_vpc.id
-    cidr_block          = "${var.ip_subnet_4}/24"
-    availability_zone   = "us-west-2b"
+    cidr_block          = local.private_subnet[1]
+    availability_zone   = local.availability_zone[1]
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-subnet-4"
+        Name = "private-subnet-4"
     }
 }
 
@@ -117,14 +117,32 @@ resource "aws_nat_gateway" "main_nat_gateway" {
     subnet_id       = aws_subnet.public_subnet_1.id
     
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-nat-gateway"
+        Name = "nat-gateway"
     }
 }
 
 resource "aws_eip" "main_eip" {
-    vpc = true
     depends_on = [aws_internet_gateway.main_gateway]
     tags = {
-        Name = "${var.cluster_name}-${var.stage}-eip"
+        Name = "eip"
+    }
+}
+
+resource "aws_security_group" "main_security_group" {
+    vpc_id = aws_vpc.main_vpc.id
+    
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["${lookup(var.cidr_ip_block, var.stage)}.0.0/20"]
+    
+    }
+
+    ingress {
+        from_port   = 22
+        to_port     = 22
+        protocol    = "tcp"
+        cidr_blocks = ["${lookup(var.cidr_ip_block, var.stage)}.0.0/20"]
     }
 }

@@ -1,18 +1,27 @@
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-1"
+  profile = "luanleite.aws"
+
+  default_tags {
+    tags = {
+      "ClusterName" = "project-ecs"
+      "Stage"       = "dev"
+    }
+  }
 }
 
 terraform {
   backend "s3" {
-    bucket = "luan-lambda-terraform-s3"
-    key    = "terraform.ecs.tfstate"
-    region = "us-west-2"
+    bucket  = "project-ecs-terraform-s3"
+    key     = "terraform.ecs.tfstate"
+    region  = "us-east-1"
+    profile = "luanleite.aws"
   }
 }
 
 module "networking" {
-  source        = "./modules/networking"
-  cluster_name  = "luan-ecs"
-  stage         = "dev"
-  cidr_ip_block = "10.10.0.0/16"
+  source       = "./modules/networking"
+  stage        = "dev"
+  region       = "us-east-1"
+  cluster_name = "project-ecs"
 }
