@@ -14,8 +14,8 @@ variable "cidr_ip_block" {
   
 }
 
-variable "cluster_name" {
-  description = "Name of the cluster"
+variable "project_name" {
+  description = "Name of the project"
   type        = string
 }
 

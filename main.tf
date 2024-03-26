@@ -4,7 +4,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      "ClusterName" = "project-ecs"
+      "Projec_name" = "project-ecs"
       "Stage"       = "dev"
     }
   }
@@ -23,5 +23,5 @@ module "networking" {
   source       = "./modules/networking"
   stage        = "dev"
   region       = "us-east-1"
-  cluster_name = "project-ecs"
+  project_name = "project-ecs"
 }
