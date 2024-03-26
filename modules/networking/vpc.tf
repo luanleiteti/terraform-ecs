@@ -92,7 +92,7 @@ resource "aws_subnet" "private_subnet_2" {
 ############PRIVATE ROUTE TABLE############
 resource "aws_route_table" "main_route_table_private" {
     vpc_id = aws_vpc.main_vpc.id
-    
+
     tags = {
         Name = "${var.stage}-main-private-route"
     }
@@ -132,7 +132,7 @@ resource "aws_eip" "main_eip" {
     }
 }
 
-resource "aws_security_group" "main_security_group" {
+resource "aws_default_security_group" "main_security_group" {
     vpc_id = aws_vpc.main_vpc.id
     
     egress {
@@ -148,5 +148,9 @@ resource "aws_security_group" "main_security_group" {
         to_port     = 22
         protocol    = "tcp"
         cidr_blocks = ["${lookup(var.cidr_ip_block, var.stage)}.0.0/20"]
+    }
+
+    tags = {
+      Name = "${var.stage}-security-group"
     }
 }
