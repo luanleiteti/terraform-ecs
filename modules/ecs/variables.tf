@@ -62,3 +62,8 @@ variable "security_group_ids" {
   description = "Security group ID for the ECS instances"
   type        = string
 }
+
+variable "ecs_volume_size" {
+  description = "Volume size for the ECS instances"
+  type        = number
+}

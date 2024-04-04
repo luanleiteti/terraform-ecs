@@ -9,8 +9,12 @@ resource "aws_autoscaling_group" "main_asg_ecs" {
   default_cooldown = var.default_cooldown
   default_instance_warmup = var.default_instance_warmup
   termination_policies = ["OldestInstance"]
-  launch_configuration = aws_launch_template.main_launch_template_ecs.name
   vpc_zone_identifier = var.subnet_ids
+
+  launch_template {
+    id      = aws_launch_template.main_launch_template_ecs.id
+    version = aws_launch_template.main_launch_template_ecs.latest_version
+  }
 
   instance_refresh {
     strategy = "Rolling"
