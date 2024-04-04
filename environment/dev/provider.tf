@@ -1,11 +1,11 @@
 provider "aws" {
-  region = "us-east-1"
+  region  = local.region
   profile = "luanleite.aws"
 
   default_tags {
     tags = {
-      "Projec_name" = "project-ecs"
-      "Stage"       = "dev"
+      "Projec_name" = local.project_name
+      "Stage"       = local.stage
     }
   }
 }
@@ -17,11 +17,4 @@ terraform {
     region  = "us-east-1"
     profile = "luanleite.aws"
   }
-}
-
-module "networking" {
-  source       = "./modules/networking"
-  stage        = "dev"
-  region       = "us-east-1"
-  project_name = "project-ecs"
 }

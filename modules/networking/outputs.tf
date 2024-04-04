@@ -21,3 +21,19 @@ output "private_subnet_1" {
 output "private_subnet_2" {
     value = aws_subnet.private_subnet_2.id
 }
+
+output "public_security_group_id" {
+    value = aws_security_group.public_main_security_group.id
+}
+
+output "private_security_group_id" {
+    value = aws_security_group.private_main_security_group.id
+}
+
+output "db_security_group_id" {
+    value = aws_security_group.db_main_security_group.id
+}
+
+output "alb_security_group_id" {
+    value = aws_security_group.alb_main_security_group.id
+}
