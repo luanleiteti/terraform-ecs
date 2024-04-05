@@ -67,3 +67,8 @@ variable "ecs_volume_size" {
   description = "Volume size for the ECS instances"
   type        = number
 }
+
+variable "aws_iam_instance_profile" {
+  description = "IAM instance profile for the ECS instances"
+  type        = string
+}

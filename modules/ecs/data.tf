@@ -9,6 +9,3 @@ data "template_file" "bootstrap_script" {
     }
   )
 }
-
-
-

@@ -20,7 +20,7 @@ resource "aws_launch_template" "main_launch_template_ecs" {
     }
     
     iam_instance_profile {
-        name = aws_iam_instance_profile.ec2.name
+      name = var.aws_iam_instance_profile
     }
 
 }
