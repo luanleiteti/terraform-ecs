@@ -72,18 +72,3 @@ variable "aws_iam_instance_profile" {
   description = "IAM instance profile for the ECS instances"
   type        = string
 }
-
-variable "main_ecs_kms_key_id" {
-  description = "KMS key ID for the ECS instances"
-  type        = string
-}
-
-variable "main_ecs_log_group" {
-  description = "Log group for the ECS instances"
-  type        = string
-}
-
-variable "main_s3_logs_bucket" {
-  description = "S3 bucket for the ECS instances"
-  type        = string
-}
