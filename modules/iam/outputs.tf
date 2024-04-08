@@ -17,3 +17,7 @@ output "ec2_main_role" {
 output "aws_iam_instance_profile" {
   value = aws_iam_instance_profile.ec2
 }
+
+output "cloudwatch_logs_main_kms_key_policy" {
+  value = aws_iam_policy.cloudwatch_logs_main_kms_key_policy
+}

@@ -15,5 +15,8 @@ module "ecs" {
   default_instance_warmup = 60
   ecs_volume_size         = 50
   aws_iam_instance_profile = module.iam.aws_iam_instance_profile.name
+  main_ecs_kms_key_id = module.kms.ecs_kms_key.id
+  main_ecs_log_group = module.cloudwatch.cloudwatch_ecs_log_group_name.name
+  main_s3_logs_bucket = module.s3.main_ecs_logs_bucket.id
 
 }

@@ -86,3 +86,23 @@ data "aws_iam_policy_document" "s3_main_kms_key_policy" {
     resources = ["*"]
   }
 }
+
+data "aws_iam_policy_document" "cloudwatch_logs_main_kms_key_policy" {
+  statement{
+    sid = "Enable IAM User Permissions"
+    effect = "Allow"
+    principals {
+      type = "Service"
+      identifiers = ["logs.amazonaws.com"]
+    }
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey"
+    ]
+    resources = ["*"]
+  }
+  
+}

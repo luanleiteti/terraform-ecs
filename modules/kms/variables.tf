@@ -19,3 +19,8 @@ variable "ecs_main_kms_key_policy" {
   type        = string
 }
 
+variable "cloudwatch_logs_main_kms_key_policy" {
+  description = "IAM policy for the CloudWatch Logs KMS key"
+  type        = string
+}
+

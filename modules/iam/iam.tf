@@ -34,3 +34,9 @@ resource "aws_iam_policy" "s3_main_kms_key_policy" {
   description = "Policy for S3 to access the main KMS key"
   policy = data.aws_iam_policy_document.s3_main_kms_key_policy.json
 }
+
+resource "aws_iam_policy" "cloudwatch_logs_main_kms_key_policy" {
+  name   = "${var.stage}-${var.project_name}-cloudwatch-logs-kms-key-policy"
+  description = "Policy for CloudWatch Logs to access the main KMS key"
+  policy = data.aws_iam_policy_document.cloudwatch_logs_main_kms_key_policy.json
+}
