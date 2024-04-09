@@ -23,4 +23,10 @@ resource "aws_launch_template" "main_launch_template_ecs" {
       name = var.aws_iam_instance_profile
     }
 
+    metadata_options {
+      http_tokens = "required"
+      http_put_response_hop_limit = 2
+      http_endpoint = "enabled"
+    }
+
 }

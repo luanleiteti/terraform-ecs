@@ -1,5 +1,5 @@
 module "ecs" {
-  source                  = "../../modules/ecs"
+  source                  = "../../modules/ecs-cluster"
   stage                   = local.stage
   project_name            = local.project_name
   subnet_ids              = [module.networking.private_subnet_1, module.networking.private_subnet_2, module.networking.private_subnet_3]
