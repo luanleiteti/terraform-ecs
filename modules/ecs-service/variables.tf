@@ -41,5 +41,5 @@ variable "main_containerPort" {
 variable "main_container_command" {
   description = "Command for the container"
   type        = list(string)
-  
+
 }
