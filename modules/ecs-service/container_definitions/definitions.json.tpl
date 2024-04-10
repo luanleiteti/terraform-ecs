@@ -1,11 +1,9 @@
 [
   {
     "name": "${application_name}",
-    
     "image": "${ecr_url}:latest",
     "cpuReservation": ${cpu_reservation},
     "memoryReservation": ${memory_reservation},
-    "network_mode": "bridge",
     "portMappings": [
       {
         "containerPort": ${application_port},

@@ -10,6 +10,7 @@ resource "aws_autoscaling_group" "main_asg_ecs" {
   default_instance_warmup   = var.default_instance_warmup
   termination_policies      = ["OldestInstance"]
   vpc_zone_identifier       = var.subnet_ids
+  target_group_arns         = var.target_group_arns
 
   launch_template {
     id      = aws_launch_template.main_launch_template_ecs.id

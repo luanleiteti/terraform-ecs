@@ -12,3 +12,9 @@ variable "main_alb_bucket_logs_arn" {
   description = "Name of the bucket for the logs"
   type        = string
 }
+
+variable "main_alb_bucket_logs_name" {
+  description = "Name of the bucket for the logs"
+  type        = string
+
+}

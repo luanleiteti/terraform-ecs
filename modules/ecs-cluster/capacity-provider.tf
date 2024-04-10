@@ -10,13 +10,15 @@ resource "aws_ecs_capacity_provider" "main_capacity_provider" {
       target_capacity           = 100
     }
 
+    managed_draining = "DISABLED"
+
     managed_termination_protection = "DISABLED"
   }
 
 }
 
 resource "aws_ecs_cluster_capacity_providers" "main_cluster_capacity_providers" {
-  cluster_name       = aws_ecs_cluster.main_cluster_ecs.id
+  cluster_name       = aws_ecs_cluster.main_cluster_ecs.name
   capacity_providers = [aws_ecs_capacity_provider.main_capacity_provider.name]
   default_capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.main_capacity_provider.name

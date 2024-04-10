@@ -15,5 +15,6 @@ module "ecs" {
   default_instance_warmup  = 60
   ecs_volume_size          = 50
   aws_iam_instance_profile = module.iam.aws_iam_instance_profile.name
+  target_group_arns        = [module.target_group.main_alb_target_group.arn]
 
 }

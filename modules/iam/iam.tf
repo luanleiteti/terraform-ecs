@@ -33,6 +33,6 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 }
 
 resource "aws_s3_bucket_policy" "main_alb_bucket_policy" {
-  bucket = var.main_alb_bucket_logs_arn
+  bucket = var.main_alb_bucket_logs_name
   policy = data.aws_iam_policy_document.main_elb_send_logs_policy.json
 }

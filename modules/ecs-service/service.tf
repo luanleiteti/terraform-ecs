@@ -17,12 +17,6 @@ resource "aws_ecs_service" "main_service" {
   desired_count   = 1
   launch_type     = "EC2"
 
-  network_configuration {
-    subnets          = var.private_subnets
-    security_groups  = [var.private_main_security_group]
-    assign_public_ip = false
-  }
-
   load_balancer {
     target_group_arn = var.main_alb_target_group_arn
     container_name   = local.container.application_name

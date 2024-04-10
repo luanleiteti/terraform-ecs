@@ -72,3 +72,8 @@ variable "aws_iam_instance_profile" {
   description = "IAM instance profile for the ECS instances"
   type        = string
 }
+
+variable "target_group_arns" {
+  description = "Target group ARNs"
+  type        = list(string)
+}
