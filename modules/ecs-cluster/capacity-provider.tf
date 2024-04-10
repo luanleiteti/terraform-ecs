@@ -9,6 +9,8 @@ resource "aws_ecs_capacity_provider" "main_capacity_provider" {
       minimum_scaling_step_size = var.min_size
       target_capacity           = 100
     }
+
+    managed_termination_protection = "DISABLED"
   }
 
 }

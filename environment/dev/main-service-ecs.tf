@@ -1,4 +1,4 @@
-module "ecs-service" {
+module "ecs_service" {
   source                            = "../../modules/ecs-service"
   stage                             = local.stage
   project_name                      = local.project_name
@@ -9,6 +9,10 @@ module "ecs-service" {
   main_container_difinitions_memory = 256
   main_container_command            = ["./python", "app.py"]
   main_containerPort                = 80
-
+  ecr_lifecycle_policy_document     = module.iam.ecr_lifecycle_policy_document.json
+  private_subnets                   = [module.networking.private_subnet_1, module.networking.private_subnet_2, module.networking.private_subnet_3]
+  private_main_security_group       = module.networking.private_security_group_id
+  ecs_cluster_name                  = module.ecs.ecs_cluster.name
+  main_alb_target_group_arn         = module.target_group.main_alb_target_group.arn
 
 }

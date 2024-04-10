@@ -1,8 +1,8 @@
-output "VPC_name" {
-  value = aws_vpc.main_vpc.id
+output "vpc" {
+  value = aws_vpc.main_vpc
 }
 
-output "VPC_cidr_block" {
+output "vpc_cidr_block" {
   value = aws_vpc.main_vpc.cidr_block
 }
 
