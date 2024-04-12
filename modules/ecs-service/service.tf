@@ -15,15 +15,36 @@ resource "aws_ecs_service" "main_service" {
   cluster         = var.ecs_cluster_name
   task_definition = aws_ecs_task_definition.main_task_definition.arn
   desired_count   = 1
-  launch_type     = "EC2"
-
+  force_new_deployment = true
+  scheduling_strategy = "REPLICA"
   load_balancer {
     target_group_arn = var.main_alb_target_group_arn
     container_name   = local.container.application_name
     container_port   = local.container.application_port
   }
 
+  ordered_placement_strategy {
+    type = "binpack"
+    field = "memory"
+  }
+  
+  ordered_placement_strategy {
+    type  = "spread"
+    field = "attribute:ecs.availability-zone"
+  }
+
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
+
+
   lifecycle {
     ignore_changes = [task_definition]
+  }
+
+  capacity_provider_strategy {
+    capacity_provider = var.capacity_provider
+    weight = 1
   }
 }

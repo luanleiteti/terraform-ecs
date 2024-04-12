@@ -35,6 +35,7 @@ resource "aws_route" "main_route_public" {
 
 }
 
+#TODO add new subet to use in code catalyst test
 ############PUBLIC SUBNETS############
 resource "aws_subnet" "public_subnet_1" {
   vpc_id            = aws_vpc.main_vpc.id

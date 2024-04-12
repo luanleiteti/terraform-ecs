@@ -53,8 +53,8 @@ data "aws_ecr_lifecycle_policy_document" "ecr_lifecycle_policy_document" {
 data "aws_iam_policy_document" "main_elb_send_logs_policy" {
   statement {
     principals {
-      type        = "Service"
-      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::127311923021:root"]
     }
     effect    = "Allow"
     actions   = ["s3:PutObject"]

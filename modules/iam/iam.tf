@@ -12,7 +12,7 @@ resource "aws_iam_role" "ec2" {
   assume_role_policy = data.aws_iam_policy_document.ec2_role_assume_role_policy.json
 }
 
-
+#TODO: review this policy for more restrictive permissions
 resource "aws_iam_role_policy_attachment" "ec2_admin_role_policy" {
   role       = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"

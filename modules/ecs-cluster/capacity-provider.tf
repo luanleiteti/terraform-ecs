@@ -27,3 +27,5 @@ resource "aws_ecs_cluster_capacity_providers" "main_cluster_capacity_providers" 
   }
 
 }
+
+#TODO create capacity provider police for service autoscaling

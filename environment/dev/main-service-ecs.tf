@@ -14,5 +14,6 @@ module "ecs_service" {
   private_main_security_group       = module.networking.private_security_group_id
   ecs_cluster_name                  = module.ecs.ecs_cluster.name
   main_alb_target_group_arn         = module.target_group.main_alb_target_group.arn
+  capacity_provider                 = module.ecs.capacity_provider.name
 
 }

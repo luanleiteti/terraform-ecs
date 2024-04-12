@@ -68,3 +68,8 @@ variable "main_alb_target_group_arn" {
   description = "ARN of the target group"
   type        = string
 }
+
+variable "capacity_provider" {
+  description = "Capacity provider"
+  type        = string
+}

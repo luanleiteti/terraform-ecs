@@ -5,11 +5,10 @@ resource "aws_lb" "main_alb" {
   security_groups    = [var.main_alb_security_group_id]
   subnets            = var.main_private_subnets_id
   idle_timeout       = 300
-  # access_logs {
-  #   bucket = aws_s3_bucket.main_alb_bucket_logs.id
-  #   prefix = "${var.stage}-${var.project_name}-alb"
-  #   enabled = true
-  # }
+  access_logs {
+    bucket = aws_s3_bucket.main_alb_bucket_logs.id
+    enabled = true
+  }
 }
 
 resource "aws_lb_listener" "main_alb_listener_http" {

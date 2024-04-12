@@ -4,6 +4,7 @@
     "image": "${ecr_url}:latest",
     "cpuReservation": ${cpu_reservation},
     "memoryReservation": ${memory_reservation},
+    "command": ${jsonencode(container_command)},
     "portMappings": [
       {
         "containerPort": ${application_port},

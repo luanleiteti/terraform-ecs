@@ -1,3 +1,4 @@
+#TODO add variables to config resource
 resource "aws_lb_target_group" "main_alb_target_group" {
   name                          = "${var.stage}-${var.project_name}-alb-tg"
   port                          = var.main_containerPort
@@ -17,4 +18,3 @@ resource "aws_lb_target_group" "main_alb_target_group" {
   }
 
 }
-
