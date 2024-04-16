@@ -10,7 +10,7 @@ resource "aws_ecs_capacity_provider" "main_capacity_provider" {
       target_capacity           = 100
     }
 
-    managed_draining = "DISABLED"
+    managed_draining = "ENABLED"
 
     managed_termination_protection = "DISABLED"
   }
@@ -27,5 +27,3 @@ resource "aws_ecs_cluster_capacity_providers" "main_cluster_capacity_providers" 
   }
 
 }
-
-#TODO create capacity provider police for service autoscaling

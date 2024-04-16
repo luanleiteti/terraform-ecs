@@ -24,3 +24,8 @@ variable "main_containerPort" {
   type        = number
 
 }
+
+variable "main_alb_id" {
+  description = "ID of the main ALB"
+  type        = string
+}

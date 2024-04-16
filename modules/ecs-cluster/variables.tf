@@ -73,7 +73,7 @@ variable "aws_iam_instance_profile" {
   type        = string
 }
 
-variable "target_group_arns" {
-  description = "Target group ARNs"
-  type        = list(string)
-}
+# variable "target_group_arns" {
+#   description = "Target group ARNs"
+#   type        = list(string)
+# }

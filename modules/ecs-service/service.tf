@@ -11,12 +11,12 @@ resource "aws_ecs_task_definition" "main_task_definition" {
 }
 
 resource "aws_ecs_service" "main_service" {
-  name            = "${var.stage}-${var.project_name}-ecs-service"
-  cluster         = var.ecs_cluster_name
-  task_definition = aws_ecs_task_definition.main_task_definition.arn
-  desired_count   = 1
+  name                 = "${var.stage}-${var.project_name}-ecs-service"
+  cluster              = var.ecs_cluster_name
+  task_definition      = aws_ecs_task_definition.main_task_definition.arn
+  desired_count        = 1
   force_new_deployment = true
-  scheduling_strategy = "REPLICA"
+  scheduling_strategy  = "REPLICA"
   load_balancer {
     target_group_arn = var.main_alb_target_group_arn
     container_name   = local.container.application_name
@@ -24,10 +24,10 @@ resource "aws_ecs_service" "main_service" {
   }
 
   ordered_placement_strategy {
-    type = "binpack"
+    type  = "binpack"
     field = "memory"
   }
-  
+
   ordered_placement_strategy {
     type  = "spread"
     field = "attribute:ecs.availability-zone"
@@ -45,6 +45,6 @@ resource "aws_ecs_service" "main_service" {
 
   capacity_provider_strategy {
     capacity_provider = var.capacity_provider
-    weight = 1
+    weight            = 1
   }
 }

@@ -38,12 +38,6 @@ variable "main_containerPort" {
   type        = number
 }
 
-variable "main_container_command" {
-  description = "Command for the container"
-  type        = list(string)
-
-}
-
 variable "ecr_lifecycle_policy_document" {
   description = "Lifecycle policy for the ECR"
   type        = string
@@ -72,4 +66,40 @@ variable "main_alb_target_group_arn" {
 variable "capacity_provider" {
   description = "Capacity provider"
   type        = string
+}
+
+variable "health_check_command" {
+  description = "Command for the health check"
+  type        = list(string)
+}
+
+variable "health_check_interval" {
+  description = "Interval for the health check"
+  type        = number
+}
+
+variable "health_check_timeout" {
+  description = "Timeout for the health check"
+  type        = number
+}
+
+variable "health_check_retries" {
+  description = "Retries for the health check"
+  type        = number
+}
+
+variable "health_check_start_period" {
+  description = "Start period for the health check"
+  type        = number
+}
+
+variable "load_balancer_id" {
+  description = "ID of the load balancer"
+  type        = string
+
+}
+variable "target_group_id" {
+  description = "ID of the target group"
+  type        = string
+
 }

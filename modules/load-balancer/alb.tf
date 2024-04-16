@@ -6,7 +6,7 @@ resource "aws_lb" "main_alb" {
   subnets            = var.main_private_subnets_id
   idle_timeout       = 300
   access_logs {
-    bucket = aws_s3_bucket.main_alb_bucket_logs.id
+    bucket  = aws_s3_bucket.main_alb_bucket_logs.id
     enabled = true
   }
 }
