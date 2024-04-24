@@ -1,24 +1,69 @@
 SchemaVersion: 1.0
+
+Triggers:
+  - Type: PUSH
+    Branches:
+      - main
 Actions:
-  PushToAmazonECR_26:
-    # Identifies the action. Do not modify this value.
-    Identifier: codecatalyst-labs/push-to-ecr@v1.0.3
+  BuildDocker:
+    Identifier: aws/build@v1
     Environment:
       Connections:
         - Role: get_ecr_image_codecatalyst_role
           Name: "522246528012"
       Name: ecs_pipeline_bluegree
     Inputs:
+      Variables:
+        - Name: container-name
+          Value: dev-project-container-app
+        - Name: REPOSITORY_URI
+          Value: 522246528012.dkr.ecr.us-east-1.amazonaws.com
+        - Name: IMAGE_TAG
+          Value: ${WorkflowSource.CommitId}
+        - Name: stage
+          Value: dev
+        - Name: project_name
+          Value: project-ecs
       Sources:
         - WorkflowSource
+    Configuration:
+      Steps:
+        #pre_build:
+        - Run: echo Logging in to Amazon ECR...
+        - Run: aws ecr get-login-password --region us-east-1 | docker login --username AWS
+            --password-stdin $REPOSITORY_URI/$stage-$project_name-registry
+        #build:
+        - Run: echo Build started on `date`
+        - Run: echo Building the Docker image...
+        - Run: docker build -t $REPOSITORY_URI/$stage-$project_name-registry:latest ./app
+        - Run: docker tag $REPOSITORY_URI/$stage-$project_name-registry:latest
+            $REPOSITORY_URI/$stage-$project_name-registry:$IMAGE_TAG
+        #post_build:
+        - Run: echo Build completed on `date`
+        - Run: echo Pushing the Docker images...
+        - Run: docker push $REPOSITORY_URI/$stage-$project_name-registry:latest
+        - Run: docker push $REPOSITORY_URI/$stage-$project_name-registry:$IMAGE_TAG
     Compute:
       Type: EC2
+      Fleet: Linux.x86-64.Large
+
+  RenderTaskDef:
+    Identifier: aws/ecs-render-task-definition@v1
     Configuration:
-      Tags: ${WorkflowSource.CommitId}
-      RepositoryName: dev-project-ecs-registry
-      AWSRegion: us-east-1
-      DockerfileLocation: app/
-      ImageTag: ${WorkflowSource.CommitId}
-      PublicRepository: false
-      EncryptionType: AES256
-      ImageScanningConfiguration: true
+      image: $IMAGE_TAG
+      container-name: $container-name
+      task-definition: modules/ecs-service/container_definitions/taskdef.json
+    Compute:
+      Type: EC2
+      Fleet: Linux.x86-64.Large
+    # The output variable is set to the name of the updated task definition file. 
+    Outputs:
+      Artifacts:
+        - Name: TaskDefArtifact
+          Files:
+            - task-definition*
+    DependsOn:
+      - BuildDocker
+    Inputs:
+      Sources:
+        - WorkflowSource
