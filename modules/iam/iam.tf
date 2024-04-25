@@ -36,3 +36,20 @@ resource "aws_s3_bucket_policy" "main_alb_bucket_policy" {
   bucket = var.main_alb_bucket_logs_name
   policy = data.aws_iam_policy_document.main_elb_send_logs_policy.json
 }
+
+
+resource "aws_iam_role" "codedeploy_role" {
+  name               = "${var.stage}-${var.project_name}-codedeploy-role"
+  assume_role_policy = data.aws_iam_policy_document.codedeploy_assume_role_policy.json
+}
+
+
+resource "aws_iam_role_policy_attachment" "codedeploy_role_policy" {
+  role       = aws_iam_role.codedeploy_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+}
+
+resource "aws_iam_role_policy_attachment" "codedeploy_manage_ecs_role_policy" {
+  role       = aws_iam_role.codedeploy_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+}

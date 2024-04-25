@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:us-east-1:522246528012:task-definition/dev-project-ecs-task:31"
+        LoadBalancerInfo:
+          ContainerName: dev-project-container-app
+          ContainerPort: 80

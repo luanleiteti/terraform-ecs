@@ -40,3 +40,9 @@ variable "main_alb_target_group_arn" {
   type        = string
 
 }
+
+variable "main_alb_target_group_green_arn" {
+  description = "ARN of the target group"
+  type        = string
+
+}

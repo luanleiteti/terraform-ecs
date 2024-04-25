@@ -22,6 +22,7 @@ data "aws_iam_policy_document" "ec2_role_assume_role_policy" {
   }
 }
 
+#TODO: Rename this resource to: ecs_task_execution_assume_role_policy
 data "aws_iam_policy_document" "ecs_task_execution_role_policy" {
 
   statement {
@@ -61,4 +62,56 @@ data "aws_iam_policy_document" "main_elb_send_logs_policy" {
     resources = ["${var.main_alb_bucket_logs_arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"]
   }
 
+}
+
+data "aws_iam_policy_document" "codedeploy_assume_role_policy" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["codedeploy.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+
+data "aws_iam_policy_document" "main_sns_topic_policy" {
+  policy_id = "${var.project_name}-sns-topic-policy"
+
+  statement {
+    actions = [
+      "SNS:Subscribe",
+      "SNS:SetTopicAttributes",
+      "SNS:RemovePermission",
+      "SNS:Receive",
+      "SNS:Publish",
+      "SNS:ListSubscriptionsByTopic",
+      "SNS:GetTopicAttributes",
+      "SNS:DeleteTopic",
+      "SNS:AddPermission",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceOwner"
+
+      values = [
+        data.aws_caller_identity.current.account_id,
+      ]
+    }
+
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    resources = ["*"]
+
+    sid = "__default_statement_ID"
+  }
 }

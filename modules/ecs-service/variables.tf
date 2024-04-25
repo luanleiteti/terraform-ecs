@@ -103,3 +103,34 @@ variable "target_group_id" {
   type        = string
 
 }
+
+variable "sns_topic_policy_document" {
+  description = "Policy for the SNS topic"
+  type        = string
+}
+
+variable "email_to_send_notifications" {
+  description = "Email to send notifications"
+  type        = string
+}
+
+variable "codedeploy_role_arn" {
+  description = "ARN of the CodeDeploy role"
+  type        = string
+}
+
+variable "main_alb_listener_https" {
+  description = "ARN of the green listener"
+  type        = string
+
+}
+
+variable "main_alb_target_group_green" {
+  description = "ARN of the green target group"
+  type        = string
+}
+
+variable "main_alb_listener_https_green" {
+  description = "ARN of the green listener"
+  type        = string
+}

@@ -60,3 +60,33 @@ resource "aws_lb_listener_rule" "main_alb_listener_rule" {
 }
 
 
+resource "aws_lb_listener" "main_alb_listener_https_green" {
+  load_balancer_arn = aws_lb.main_alb.arn
+  port              = 8080
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+  certificate_arn   = data.aws_acm_certificate.issued.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = var.main_alb_target_group_green_arn
+  }
+}
+
+resource "aws_lb_listener_rule" "main_alb_listener_rule_green" {
+  listener_arn = aws_lb_listener.main_alb_listener_https_green.arn
+
+  action {
+    type             = "forward"
+    target_group_arn = var.main_alb_target_group_green_arn
+  }
+
+  condition {
+    host_header {
+      values = ["${var.domain_name}"]
+    }
+  }
+
+  depends_on = [var.main_alb_target_group_green_arn]
+
+}
