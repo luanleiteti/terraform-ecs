@@ -84,7 +84,7 @@ Actions:
       force-new-deployment: "1"
       codedeploy-deployment-group: dev-project-ecs-service_deployment-group
       codedeploy-application: dev-project-ecs-service_app
-      codedeploy-appspec: appspec.yaml
+      codedeploy-appspec: ./appspec.yaml
       task-definition: ${RenderTaskDef.task-definition}
       service: dev-project-ecs-service
       cluster: dev-project-ecs-cluster
