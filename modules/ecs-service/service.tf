@@ -47,4 +47,9 @@ resource "aws_ecs_service" "main_service" {
     capacity_provider = var.capacity_provider
     weight            = 1
   }
+
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  
+  }
 }

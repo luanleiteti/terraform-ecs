@@ -14,8 +14,6 @@ Actions:
       Name: ecs_pipeline_bluegree
     Inputs:
       Variables:
-        - Name: container-name
-          Value: dev-project-container-app
         - Name: REPOSITORY_URI
           Value: 522246528012.dkr.ecr.us-east-1.amazonaws.com
         - Name: IMAGE_TAG
@@ -24,6 +22,10 @@ Actions:
           Value: dev
         - Name: project_name
           Value: project-ecs
+        - Name: container_name
+          Value: dev-project-container-app
+        - Name: path_to_taskdef
+          Value: modules/ecs-service/container_definitions/taskdef.json
       Sources:
         - WorkflowSource
     Configuration:
@@ -43,6 +45,14 @@ Actions:
         - Run: echo Pushing the Docker images...
         - Run: docker push $REPOSITORY_URI/$stage-$project_name-registry:latest
         - Run: docker push $REPOSITORY_URI/$stage-$project_name-registry:$IMAGE_TAG
+    Outputs:
+      Variables:
+        - REPOSITORY_URI
+        - IMAGE_TAG
+        - stage
+        - project_name
+        - container_name
+        - path_to_taskdef
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
@@ -50,9 +60,9 @@ Actions:
   RenderTaskDef:
     Identifier: aws/ecs-render-task-definition@v1
     Configuration:
-      image: $IMAGE_TAG
-      container-name: $container-name
-      task-definition: modules/ecs-service/container_definitions/taskdef.json
+      image: ${BuildDocker.REPOSITORY_URI}/${BuildDocker.stage}-${BuildDocker.project_name}-registry:${BuildDocker.IMAGE_TAG}
+      container-name: ${BuildDocker.container_name}
+      task-definition: ${BuildDocker.path_to_taskdef}
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
@@ -67,3 +77,28 @@ Actions:
     Inputs:
       Sources:
         - WorkflowSource
+
+  DeployToECS:
+    Identifier: aws/ecs-deploy@v1
+    Configuration:
+      force-new-deployment: "1"
+      task-definition: ${RenderTaskDef.task-definition}
+      service: dev-project-ecs-service
+      cluster: dev-project-ecs-cluster
+      region: us-east-1
+    Compute:
+      Type: EC2
+      Fleet: Linux.x86-64.Large
+    Environment:
+      Connections:
+        - Role: ecs_update_codecatalyst_role
+          Name: "522246528012"
+      Name: ecs_pipeline_bluegree
+    DependsOn:
+      - BuildDocker
+      - RenderTaskDef
+    #Input artifact contains the updated task definition file.
+    Inputs:
+      Artifacts:
+        - TaskDefArtifact
+      Sources: []
