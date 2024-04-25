@@ -51,5 +51,5 @@ resource "aws_iam_role_policy_attachment" "codedeploy_role_policy" {
 
 resource "aws_iam_role_policy_attachment" "codedeploy_manage_ecs_role_policy" {
   role       = aws_iam_role.codedeploy_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
 }
