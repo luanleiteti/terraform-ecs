@@ -72,6 +72,7 @@ Actions:
         - Name: TaskDefArtifact
           Files:
             - task-definition*
+            - appspec.yml
     DependsOn:
       - BuildDocker
     Inputs:
