@@ -2,6 +2,7 @@ data "aws_caller_identity" "current" {}
 
 data "aws_iam_policy_document" "ecs_role_assume_role_policy" {
   statement {
+    effect = "Allow"
     actions = ["sts:AssumeRole"]
 
     principals {
@@ -13,6 +14,7 @@ data "aws_iam_policy_document" "ecs_role_assume_role_policy" {
 
 data "aws_iam_policy_document" "ec2_role_assume_role_policy" {
   statement {
+    effect = "Allow"
     actions = ["sts:AssumeRole"]
 
     principals {
@@ -26,6 +28,7 @@ data "aws_iam_policy_document" "ec2_role_assume_role_policy" {
 data "aws_iam_policy_document" "ecs_task_execution_role_policy" {
 
   statement {
+    effect = "Allow"
     actions = ["sts:AssumeRole"]
 
     principals {
@@ -118,6 +121,7 @@ data "aws_iam_policy_document" "main_sns_topic_policy" {
 
 data "aws_iam_policy_document" "ecs_service_assume_role_policy" {
   statement {
+    effect = "Allow"
     actions = ["sts:AssumeRole"]
 
     principals {

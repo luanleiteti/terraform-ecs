@@ -39,8 +39,8 @@
       }
   ],
   "family": "dev-project-ecs-task",
-  "taskRoleArn": "arn:aws:iam::522246528012:role/terraform-20240424164755759100000001",
-  "executionRoleArn": "arn:aws:iam::522246528012:role/terraform-20240424164755759100000001",
+  "taskRoleArn": "arn:aws:iam::522246528012:role/dev-project-ecs-task-execution-role",
+  "executionRoleArn": "arn:aws:iam::522246528012:role/dev-project-ecs-task-execution-role",
   "networkMode": "bridge",
   "revision": 31,
   "volumes": [],
