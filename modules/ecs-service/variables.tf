@@ -126,11 +126,21 @@ variable "main_alb_listener_https" {
 }
 
 variable "main_alb_target_group_green" {
-  description = "ARN of the green target group"
+  description = "Name of the green target group"
+  type        = string
+}
+
+variable "main_alb_target_group_blue" {
+  description = "Name of the blue target group"
   type        = string
 }
 
 variable "main_alb_listener_https_green" {
   description = "ARN of the green listener"
+  type        = string
+}
+
+variable "ecs_service_role" {
+  description = "ECS service role"
   type        = string
 }

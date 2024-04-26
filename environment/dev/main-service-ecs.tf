@@ -24,7 +24,9 @@ module "ecs_service" {
   sns_topic_policy_document         = module.iam.sns_topic_policy_document.json
   email_to_send_notifications       = "luanleite.aws@gmail.com"
   codedeploy_role_arn               = module.iam.codedeploy_role.arn
-  main_alb_target_group_green       = module.target_group.main_alb_target_group_green.arn
+  main_alb_target_group_blue        = module.target_group.main_alb_target_group.name
+  main_alb_target_group_green       = module.target_group.main_alb_target_group_green.name
   main_alb_listener_https           = module.alb.main_alb_listener_https.arn
   main_alb_listener_https_green     = module.alb.main_alb_listener_https_green.arn
+  ecs_service_role                  = module.iam.main_ecs_service_role.arn
 }

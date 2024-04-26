@@ -25,3 +25,7 @@ output "codedeploy_role" {
 output "sns_topic_policy_document" {
   value = data.aws_iam_policy_document.main_sns_topic_policy
 }
+
+output "main_ecs_service_role" {
+  value = aws_iam_role.main_ecs_service_role
+}

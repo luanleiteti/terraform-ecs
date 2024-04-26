@@ -7,3 +7,7 @@ Resources:
         LoadBalancerInfo:
           ContainerName: "dev-project-container-app"
           ContainerPort: 80
+        CapacityProviderStrategy:
+          - Base: 1
+            CapacityProvider: "dev-project-ecs-capacity-provide"
+            Weight: 2

@@ -115,3 +115,14 @@ data "aws_iam_policy_document" "main_sns_topic_policy" {
     sid = "__default_statement_ID"
   }
 }
+
+data "aws_iam_policy_document" "ecs_service_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs.amazonaws.com"]
+    }
+  }
+}

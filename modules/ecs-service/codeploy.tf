@@ -66,7 +66,7 @@ resource "aws_codedeploy_deployment_group" "main_code_deploy_deployment_group" {
       }
 
       target_group {
-        name = var.main_alb_target_group_arn
+        name = var.main_alb_target_group_blue
       }
 
       target_group {

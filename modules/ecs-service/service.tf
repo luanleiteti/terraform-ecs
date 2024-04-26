@@ -17,6 +17,7 @@ resource "aws_ecs_service" "main_service" {
   desired_count        = 1
   force_new_deployment = true
   scheduling_strategy  = "REPLICA"
+  iam_role             = var.ecs_service_role
   load_balancer {
     target_group_arn = var.main_alb_target_group_arn
     container_name   = local.container.application_name
