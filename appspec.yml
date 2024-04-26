@@ -9,5 +9,5 @@ Resources:
           ContainerPort: 80
         CapacityProviderStrategy:
           - Base: 1
-            CapacityProvider: "dev-project-ecs-capacity-provide"
+            CapacityProvider: "dev-project-ecs-capacity-provider"
             Weight: 2
