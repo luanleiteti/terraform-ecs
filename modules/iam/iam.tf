@@ -67,3 +67,15 @@ resource "aws_iam_role_policy_attachment" "main_ecs_service_role_policy" {
   role       = aws_iam_role.main_ecs_service_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
+
+resource "aws_iam_role_policy_attachment" "main_elbv2_ecs_service_role_policy" {
+  role       = aws_iam_role.codedeploy_role.name
+  policy_arn = aws_iam_policy.main_elbv2_ecs_service_role_policy.arn
+}
+
+
+resource "aws_iam_policy" "main_elbv2_ecs_service_role_policy" {
+  name        = "${var.stage}-${var.project_name}-elbv2-ecs-service-policy"
+  description = "Policy to allow ECS to register targets in the ELBv2"
+  policy      = data.aws_iam_policy_document.main_elbv2_ecs_service_role_policy.json
+}

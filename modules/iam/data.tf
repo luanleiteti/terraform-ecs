@@ -130,3 +130,14 @@ data "aws_iam_policy_document" "ecs_service_assume_role_policy" {
     }
   }
 }
+
+data "aws_iam_policy_document" "main_elbv2_ecs_service_role_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "elasticloadbalancing:*",
+    ]
+
+    resources = ["*"]
+  }
+}
